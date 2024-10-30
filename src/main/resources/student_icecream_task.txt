@@ -1,0 +1,29 @@
+SELECT s.name AS student_name, COUNT(f.id) AS flavor_count
+FROM student s
+JOIN student_order o ON s.id = o.student_id
+JOIN flavor f ON o.id = f.order_id
+WHERE o.order_date BETWEEN '2024-10-01' AND '2024-10-31'
+GROUP BY s.name;
+
+SELECT f.name AS flavor_name, COUNT(DISTINCT o.student_id) AS student_count
+FROM flavor f
+JOIN student_order o ON f.order_id = o.id
+GROUP BY f.name;
+
+SELECT s.name AS student_name, COUNT(DISTINCT f.name) AS flavor_count
+FROM student s
+JOIN student_order o ON s.id = o.student_id
+JOIN flavor f ON o.id = f.order_id
+GROUP BY s.name
+HAVING COUNT(DISTINCT f.name) >= 2;
+
+SELECT name AS flavor_name, COUNT(*) AS flavor_count
+FROM flavor
+WHERE name LIKE '%chocolate%'
+GROUP BY name;
+
+SELECT s.name AS student_name, COUNT(DISTINCT o.truck_id) AS truck_count
+FROM student s
+JOIN student_order o ON s.id = o.student_id
+GROUP BY s.name
+HAVING COUNT(DISTINCT o.truck_id) > 1;
